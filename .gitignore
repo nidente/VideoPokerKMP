@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+*.jar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# KMP specifics
+.kotlin/
+
+# Node (for web)
+node_modules/
+dist/
+.env
+
+# Darwin/iOS
+.derived/
+xcuserdata/
+
+# Local properties
+local.properties
