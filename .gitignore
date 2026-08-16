@@ -1,7 +1,9 @@
 # Gradle
 .gradle/
 build/
+*/build/
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # IDE
 .idea/
@@ -14,17 +16,13 @@ build/
 .DS_Store
 Thumbs.db
 
-# KMP specifics
+# Kotlin/KMP
 .kotlin/
 
-# Node (for web)
+# Node / web
 node_modules/
 dist/
 .env
 
-# Darwin/iOS
-.derived/
-xcuserdata/
-
-# Local properties
+# Local config
 local.properties
