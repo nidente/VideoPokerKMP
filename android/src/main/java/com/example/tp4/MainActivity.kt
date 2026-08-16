@@ -79,37 +79,6 @@ private val LoseRed = Color(0xFFD32F2F)
 private val WinGreen = Color(0xFF4CAF50)
 private val ButtonBlue = Color(0xFF0D83C7)
 
-data class GameHistoryEntry(
-    val roundNumber: Int,
-    val mise: Int,
-    val combinaison: String,
-    val gainBrut: Int,
-    val gainNet: Int,
-    val soldeApres: Int
-) {
-    val isWin: Boolean
-        get() = gainBrut > 0
-}
-
-fun handLabel(result: Poker.PokerHandValue): String {
-    return when (result) {
-        Poker.PokerHandValue.NOTHING -> "Perdu"
-        Poker.PokerHandValue.RICH_PAIR -> "Paire"
-        Poker.PokerHandValue.TWO_PAIR -> "Double paire"
-        Poker.PokerHandValue.THREE_OF_A_KIND -> "Brelan"
-        Poker.PokerHandValue.STRAIGHT -> "Suite"
-        Poker.PokerHandValue.FLUSH -> "Couleur"
-        Poker.PokerHandValue.FULL_HOUSE -> "Full"
-        Poker.PokerHandValue.FOUR_OF_A_KIND -> "Carré"
-        Poker.PokerHandValue.STRAIGHT_FLUSH -> "Quinte flush"
-        Poker.PokerHandValue.ROYAL_FLUSH -> "Quinte flush royale"
-    }
-}
-
-enum class GameState {
-    CONFIG, MISE, CHOIX, GAIN
-}
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
