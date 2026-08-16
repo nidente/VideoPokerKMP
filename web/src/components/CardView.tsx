@@ -21,14 +21,16 @@ interface CardFaceProps {
   card: Card;
   selected?: boolean;
   onClick?: () => void;
+  dealIndex?: number;
 }
 
-export function CardFace({ card, selected, onClick }: CardFaceProps) {
+export function CardFace({ card, selected, onClick, dealIndex = 0 }: CardFaceProps) {
   const row = ROW_BY_COLOR[card.color];
   const col = colFor(card.value);
   const style = {
     backgroundPosition: `${(col * 100) / (SHEET_COLS - 1)}% ${(row * 100) / (SHEET_ROWS - 1)}%`,
     backgroundSize: `${SHEET_COLS * 100}% ${SHEET_ROWS * 100}%`,
+    animationDelay: `${dealIndex * 70}ms`,
   };
 
   return (
@@ -42,6 +44,6 @@ export function CardFace({ card, selected, onClick }: CardFaceProps) {
   );
 }
 
-export function CardBack() {
-  return <div className="playing-card back" />;
+export function CardBack({ dealIndex = 0 }: { dealIndex?: number }) {
+  return <div className="playing-card back" style={{ animationDelay: `${dealIndex * 70}ms` }} />;
 }

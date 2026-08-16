@@ -3,29 +3,64 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 16px;
-  padding: 16px;
-  background: #09341f;
+  padding: clamp(10px, 3vw, 32px);
   box-sizing: border-box;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 26px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 26px
+    ),
+    radial-gradient(ellipse at center, #0f4d2f 0%, #0a3a24 55%, #041a10 100%);
+}
+
+/* Wooden table rail wrapping the felt play area */
+.rail {
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
+  padding: clamp(10px, 2.5vw, 20px);
+  border-radius: clamp(24px, 6vw, 48px);
+  background: linear-gradient(145deg, #8a5a2f 0%, #5c3a1c 45%, #3d2510 100%);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.55),
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .banner {
   width: 100%;
-  max-width: 640px;
-  background: #0f4d2f;
+  background: radial-gradient(ellipse at top, #146339 0%, #0f4d2f 60%, #09341f 100%);
   border: 2px solid #c9a227;
-  border-radius: 24px;
-  padding: 18px;
+  border-radius: clamp(16px, 4vw, 24px);
+  padding: clamp(12px, 3vw, 18px);
   text-align: center;
   box-sizing: border-box;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
 }
 
 .banner h1 {
   color: #ffd54f;
-  font-size: 28px;
+  font-size: clamp(20px, 5vw, 28px);
   font-weight: 800;
   margin: 0;
   letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
@@ -41,7 +76,7 @@
 
 .jackpot-title {
   color: #ffd54f;
-  font-size: 30px;
+  font-size: clamp(22px, 6vw, 30px);
   font-weight: 800;
 }
 
@@ -62,15 +97,15 @@
 
 .panel {
   width: 100%;
-  max-width: 640px;
-  background: #123c29;
+  background: radial-gradient(ellipse at center, #17553a 0%, #123c29 65%, #0b2b1c 100%);
   border: 2px solid #c9a227;
-  border-radius: 22px;
-  padding: 16px;
+  border-radius: clamp(16px, 4vw, 22px);
+  padding: clamp(12px, 3vw, 16px);
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.4);
 }
 
 .chips {
@@ -105,7 +140,7 @@
 
 .message {
   margin: 12px 0 0;
-  font-size: 17px;
+  font-size: clamp(14px, 4vw, 17px);
   font-weight: 600;
   color: #ffd54f;
   text-align: center;
@@ -135,9 +170,10 @@
 
 .config h2 {
   color: #fff;
-  font-size: 20px;
+  font-size: clamp(17px, 4.5vw, 20px);
   font-weight: 700;
   margin: 0;
+  text-align: center;
 }
 
 .config input {
@@ -149,6 +185,7 @@
   color-scheme: light;
   font-size: 16px;
   width: 220px;
+  max-width: 80vw;
   box-sizing: border-box;
 }
 
@@ -167,8 +204,9 @@
 }
 
 .btn-gold {
-  background: #c9a227;
-  color: #000;
+  background: linear-gradient(180deg, #ffe28a, #c9a227);
+  color: #1a1200;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
 }
 
 .btn-dark {
@@ -188,20 +226,33 @@
 }
 
 .btn-play {
-  background: #d32f2f;
+  background: linear-gradient(180deg, #ef5350, #b71c1c);
   color: #fff;
   border-radius: 22px;
   font-size: 18px;
   font-weight: 800;
   padding: 14px 28px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Felt betting strip: darker inset surface where the hand is dealt */
+.felt-strip {
+  margin-top: 22px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: clamp(10px, 3vw, 18px) clamp(8px, 2vw, 14px);
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, #0d3d26 0%, #082818 80%);
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(201, 162, 39, 0.35);
 }
 
 .cards-row {
-  margin-top: 22px;
   display: flex;
   justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: clamp(4px, 1.8vw, 8px);
+  flex-wrap: nowrap;
 }
 
 .controls {
@@ -219,6 +270,20 @@
   flex-direction: column;
   align-items: flex-start;
   min-width: 160px;
+  order: 1;
+}
+
+.bet-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  order: 2;
+}
+
+.play-col {
+  display: flex;
+  align-items: center;
+  order: 3;
 }
 
 .history-panel {
@@ -267,26 +332,44 @@
   font-size: 12px;
 }
 
-.bet-col {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.play-col {
-  display: flex;
-  align-items: center;
-}
-
 .broke {
   margin-top: 12px;
   color: #ffcdd2;
   font-size: 18px;
   font-weight: 700;
+  text-align: center;
 }
 
-@media (max-width: 480px) {
-  .banner h1 {
-    font-size: 22px;
+/* Small screens: keep Jouer/Rejouer prominent and full width, push
+   history below the bet controls instead of wrapping mid-row. */
+@media (max-width: 520px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .play-col {
+    order: 1;
+    width: 100%;
+  }
+
+  .btn-play {
+    width: 100%;
+  }
+
+  .bet-col {
+    order: 2;
+    flex-direction: row;
+  }
+
+  .history-col {
+    order: 3;
+    align-items: center;
+    width: 100%;
+  }
+
+  .history-panel {
+    width: 100%;
   }
 }

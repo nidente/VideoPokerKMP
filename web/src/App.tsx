@@ -55,6 +55,7 @@ function App() {
 
   return (
     <div className="table">
+      <div className="rail">
       <header className="banner">
         <h1>♠ ROYAL VIDEO POKER ♠</h1>
         <p className="subtitle">Style casino • KMP shared logic • session tracking</p>
@@ -101,22 +102,29 @@ function App() {
           </div>
         ) : (
           <>
-            <div className="cards-row">
-              {snapshot.state === GameState.MISE &&
-                Array.from({ length: 5 }).map((_, i) => <CardBack key={i} />)}
+            <div className="felt-strip">
+              <div className="cards-row">
+                {snapshot.state === GameState.MISE &&
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <CardBack key={`${snapshot.state}-${i}`} dealIndex={i} />
+                  ))}
 
-              {snapshot.state === GameState.CHOIX &&
-                snapshot.cards.map((card, i) => (
-                  <CardFace
-                    key={i}
-                    card={card}
-                    selected={snapshot.selectedIndices.has(i)}
-                    onClick={() => toggleCard(i)}
-                  />
-                ))}
+                {snapshot.state === GameState.CHOIX &&
+                  snapshot.cards.map((card, i) => (
+                    <CardFace
+                      key={`${snapshot.state}-${i}`}
+                      card={card}
+                      selected={snapshot.selectedIndices.has(i)}
+                      onClick={() => toggleCard(i)}
+                      dealIndex={i}
+                    />
+                  ))}
 
-              {snapshot.state === GameState.GAIN &&
-                snapshot.cards.map((card, i) => <CardFace key={i} card={card} />)}
+                {snapshot.state === GameState.GAIN &&
+                  snapshot.cards.map((card, i) => (
+                    <CardFace key={`${snapshot.state}-${i}`} card={card} dealIndex={i} />
+                  ))}
+              </div>
             </div>
 
             <div className="controls">
@@ -187,6 +195,7 @@ function App() {
           </>
         )}
       </main>
+      </div>
     </div>
   );
 }
