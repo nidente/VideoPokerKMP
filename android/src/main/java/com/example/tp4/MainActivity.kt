@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateDpAsState
@@ -42,6 +43,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -49,8 +51,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -61,6 +67,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 
 private val CasinoGreen = Color(0xFF0F4D2F)
 private val CasinoGreenDark = Color(0xFF09341F)
@@ -108,9 +115,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = CasinoGreenDark
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.radialGradient(
+                                colors = listOf(Color(0xFF0F4D2F), Color(0xFF0A3A24), Color(0xFF041A10))
+                            )
+                        )
                 ) {
                     VideoPokerScreen()
                 }
@@ -171,10 +183,23 @@ fun VideoPokerScreen() {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .background(CasinoGreenDark)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Wooden table rail wrapping the felt play area, mirrors web's .rail
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(14.dp, RoundedCornerShape(32.dp))
+                .clip(RoundedCornerShape(32.dp))
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(Color(0xFF8A5A2F), Color(0xFF5C3A1C), Color(0xFF3D2510))
+                    )
+                )
+                .padding(14.dp)
+        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             color = CasinoGreen,
@@ -312,46 +337,62 @@ fun VideoPokerScreen() {
                     }
 
                     else -> {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                            verticalAlignment = Alignment.CenterVertically
+                        // Felt betting strip: darker inset surface where the hand is dealt, mirrors web's .felt-strip
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(
+                                    Brush.radialGradient(
+                                        colors = listOf(Color(0xFF0D3D26), Color(0xFF082818))
+                                    )
+                                )
+                                .border(1.dp, GoldDark.copy(alpha = 0.35f), RoundedCornerShape(20.dp))
+                                .padding(vertical = 14.dp, horizontal = 10.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            when (gameState) {
-                                GameState.MISE -> {
-                                    repeat(5) { CardBack() }
-                                }
-
-                                GameState.CHOIX -> {
-                                    cards.forEachIndexed { index, card ->
-                                        SelectableCardView(
-                                            card = card,
-                                            isSelected = index in selectedCards,
-                                            canSelect = true,
-                                            onClick = {
-                                                selectedCards =
-                                                    if (index in selectedCards) {
-                                                        selectedCards - index
-                                                    } else {
-                                                        selectedCards + index
-                                                    }
-                                            }
-                                        )
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                when (gameState) {
+                                    GameState.MISE -> {
+                                        repeat(5) { i -> CardBack(dealIndex = i) }
                                     }
-                                }
 
-                                GameState.GAIN -> {
-                                    cards.forEach { card ->
-                                        SelectableCardView(
-                                            card = card,
-                                            isSelected = false,
-                                            canSelect = false,
-                                            onClick = {}
-                                        )
+                                    GameState.CHOIX -> {
+                                        cards.forEachIndexed { index, card ->
+                                            SelectableCardView(
+                                                card = card,
+                                                isSelected = index in selectedCards,
+                                                canSelect = true,
+                                                dealIndex = index,
+                                                onClick = {
+                                                    selectedCards =
+                                                        if (index in selectedCards) {
+                                                            selectedCards - index
+                                                        } else {
+                                                            selectedCards + index
+                                                        }
+                                                }
+                                            )
+                                        }
                                     }
-                                }
 
-                                GameState.CONFIG -> {}
+                                    GameState.GAIN -> {
+                                        cards.forEachIndexed { index, card ->
+                                            SelectableCardView(
+                                                card = card,
+                                                isSelected = false,
+                                                canSelect = false,
+                                                dealIndex = index,
+                                                onClick = {}
+                                            )
+                                        }
+                                    }
+
+                                    GameState.CONFIG -> {}
+                                }
                             }
                         }
 
@@ -577,7 +618,7 @@ fun VideoPokerScreen() {
                                     shape = RoundedCornerShape(22.dp)
                                 ) {
                                     Text(
-                                        text = "Jouer",
+                                        text = if (gameState == GameState.GAIN) "Rejouer" else "Jouer",
                                         fontWeight = FontWeight.ExtraBold,
                                         fontSize = 18.sp
                                     )
@@ -598,6 +639,8 @@ fun VideoPokerScreen() {
                     }
                 }
             }
+        }
+        }
         }
     }
 }
@@ -650,17 +693,23 @@ fun HistoryLine(label: String, value: String, valueColor: Color = Color.White) {
 }
 
 @Composable
-fun CardBack() {
-    val scale by animateFloatAsState(
-        targetValue = 1f,
-        animationSpec = tween(300),
-        label = "cardBackScale"
-    )
+fun CardBack(dealIndex: Int = 0) {
+    val dealProgress = remember(dealIndex) { Animatable(0f) }
+    LaunchedEffect(dealIndex) {
+        delay(dealIndex * 70L)
+        dealProgress.animateTo(1f, animationSpec = tween(320))
+    }
 
     Surface(
         modifier = Modifier
             .size(width = 72.dp, height = 104.dp)
-            .scale(scale),
+            .graphicsLayer {
+                alpha = dealProgress.value
+                translationY = (1f - dealProgress.value) * (-22).dp.toPx()
+                val s = 0.85f + 0.15f * dealProgress.value
+                scaleX = s
+                scaleY = s
+            },
         color = Color.Transparent
     ) {
         Box(
@@ -754,6 +803,7 @@ fun SelectableCardView(
     card: Card,
     isSelected: Boolean,
     canSelect: Boolean,
+    dealIndex: Int = 0,
     onClick: () -> Unit
 ) {
     val offsetY by animateDpAsState(
@@ -773,11 +823,24 @@ fun SelectableCardView(
         label = "cardBorderColor"
     )
 
+    val dealProgress = remember(dealIndex) { Animatable(0f) }
+    LaunchedEffect(dealIndex) {
+        delay(dealIndex * 70L)
+        dealProgress.animateTo(1f, animationSpec = tween(320))
+    }
+
     Box(
         modifier = Modifier
             .padding(4.dp)
             .offset(y = offsetY)
             .scale(scale)
+            .graphicsLayer {
+                alpha = dealProgress.value
+                translationY = (1f - dealProgress.value) * (-22).dp.toPx()
+                val s = 0.85f + 0.15f * dealProgress.value
+                scaleX = s
+                scaleY = s
+            }
             .then(if (canSelect) Modifier.clickable { onClick() } else Modifier)
     ) {
         Surface(
