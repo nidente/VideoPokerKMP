@@ -1,0 +1,292 @@
+.table {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #09341f;
+  box-sizing: border-box;
+}
+
+.banner {
+  width: 100%;
+  max-width: 640px;
+  background: #0f4d2f;
+  border: 2px solid #c9a227;
+  border-radius: 24px;
+  padding: 18px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.banner h1 {
+  color: #ffd54f;
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  color: #f8f6f0;
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+
+.jackpot {
+  margin-top: 12px;
+  animation: pulse 0.55s ease-in-out infinite alternate;
+}
+
+.jackpot-title {
+  color: #ffd54f;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.jackpot-subtitle {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  from {
+    color: #ffd54f;
+  }
+  to {
+    color: #ffffff;
+  }
+}
+
+.panel {
+  width: 100%;
+  max-width: 640px;
+  background: #123c29;
+  border: 2px solid #c9a227;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.chips {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 12px;
+}
+
+.chip {
+  background: #0f4d2f;
+  border: 1px solid #c9a227;
+  border-radius: 18px;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.chip-label {
+  color: #ffd54f;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chip-value {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.message {
+  margin: 12px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #ffd54f;
+  text-align: center;
+}
+
+.message.lose {
+  color: #ffb3b3;
+}
+
+.message.win {
+  color: #b9f6ca;
+}
+
+.last-result {
+  margin: 6px 0 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+.config {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.config h2 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.config input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #c9a227;
+  background: #fff;
+  color: #08060d;
+  color-scheme: light;
+  font-size: 16px;
+  width: 220px;
+  box-sizing: border-box;
+}
+
+.btn {
+  border: none;
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-gold {
+  background: #c9a227;
+  color: #000;
+}
+
+.btn-dark {
+  background: #424242;
+  color: #fff;
+  border-radius: 18px;
+}
+
+.btn-blue {
+  background: #0d83c7;
+  color: #fff;
+  border-radius: 18px;
+  font-size: 20px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+}
+
+.btn-play {
+  background: #d32f2f;
+  color: #fff;
+  border-radius: 22px;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 14px 28px;
+}
+
+.cards-row {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controls {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.history-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 160px;
+}
+
+.history-panel {
+  margin-top: 10px;
+}
+
+.history-line {
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+.history-label {
+  color: #ffd54f;
+  font-weight: 600;
+}
+
+.history-value {
+  color: #fff;
+  font-weight: 700;
+}
+
+.history-value.positive {
+  color: #4caf50;
+}
+
+.history-value.negative {
+  color: #d32f2f;
+}
+
+.history-value.gold {
+  color: #ffd54f;
+}
+
+.history-list {
+  margin-top: 6px;
+}
+
+.history-list p {
+  color: #fff;
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.history-list .empty {
+  color: #fff;
+  font-size: 12px;
+}
+
+.bet-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.play-col {
+  display: flex;
+  align-items: center;
+}
+
+.broke {
+  margin-top: 12px;
+  color: #ffcdd2;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .banner h1 {
+    font-size: 22px;
+  }
+}
